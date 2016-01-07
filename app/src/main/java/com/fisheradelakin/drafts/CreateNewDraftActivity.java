@@ -1,11 +1,16 @@
 package com.fisheradelakin.drafts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.fisheradelakin.drafts.db.ThoughtsDataSource;
+import com.fisheradelakin.drafts.model.Thought;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -13,6 +18,8 @@ import butterknife.ButterKnife;
 public class CreateNewDraftActivity extends AppCompatActivity {
 
     @Bind(R.id.draft_et) EditText draft;
+
+    private ThoughtsDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,8 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mDataSource = new ThoughtsDataSource(this);
     }
 
     @Override
@@ -44,7 +53,19 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
-            return true;
+            String thoughtString = draft.getText().toString();
+
+            Thought thought = new Thought();
+            thought.setDrafts(thoughtString);
+
+            mDataSource.createThought(thought);
+
+            Toast.makeText(this, "Draft saved.", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

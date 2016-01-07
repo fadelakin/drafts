@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.fisheradelakin.drafts.db.ThoughtsDataSource;
 import com.fisheradelakin.drafts.model.Thought;
 
 import java.util.List;
@@ -19,7 +21,8 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
     private List<Thought> mThoughts;
 
     public DraftsRVAdapter(Context context, List<Thought> thoughts) {
-
+        mContext = context;
+        mThoughts = thoughts;
     }
 
     @Override
@@ -30,7 +33,8 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        Thought thought = mThoughts.get(position);
+        holder.thought.setText(thought.getDrafts());
     }
 
     @Override
@@ -39,8 +43,19 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView thought;
+
         public ViewHolder(View itemView) {
             super(itemView);
+
+            thought = (TextView) itemView.findViewById(R.id.thought);
+        }
+
+        public void updateThought() {
+            Thought thought = mThoughts.get(getLayoutPosition());
+            ThoughtsDataSource dataSource = new ThoughtsDataSource(mContext);
+            dataSource.updateThought(thought);
         }
     }
 }

@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/draft_hint"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:background="@android:color/transparent"
-        android:singleLine="false"/>
+        android:scrollbars="vertical"/>
 
 </RelativeLayout>

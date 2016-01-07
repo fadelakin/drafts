@@ -1,6 +1,9 @@
 package com.fisheradelakin.drafts;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,12 +15,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.fisheradelakin.drafts.db.ThoughtsDataSource;
+import com.fisheradelakin.drafts.db.ThoughtsLoader;
+import com.fisheradelakin.drafts.model.Thought;
+
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Bind(R.id.drafts_rv) RecyclerView draftsRV;
+
+    private ThoughtsDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mDataSource = new ThoughtsDataSource(this);
+        getLoaderManager().initLoader(0, null, this);
 
         draftsRV.setHasFixedSize(true);
         draftsRV.setLayoutManager(new LinearLayoutManager(this));
@@ -65,5 +79,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new ThoughtsLoader(this, mDataSource);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        draftsRV.setAdapter(new DraftsRVAdapter(this, mDataSource.cursorToThoughts(data)));
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }
