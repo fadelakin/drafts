@@ -18,6 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreateNewDraftActivity"
+            android:label="@string/title_activity_create_new_draft"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fisheradelakin.drafts.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>
