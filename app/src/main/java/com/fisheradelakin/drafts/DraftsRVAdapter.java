@@ -1,6 +1,7 @@
 package com.fisheradelakin.drafts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
         return mThoughts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView thought;
 
@@ -50,12 +51,15 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
             super(itemView);
 
             thought = (TextView) itemView.findViewById(R.id.thought);
+
+            itemView.setOnClickListener(this);
         }
 
-        public void updateThought() {
-            Thought thought = mThoughts.get(getLayoutPosition());
-            ThoughtsDataSource dataSource = new ThoughtsDataSource(mContext);
-            dataSource.updateThought(thought);
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, CreateNewDraftActivity.class);
+            intent.putExtra("thought", mThoughts.get(getLayoutPosition()));
+            mContext.startActivity(intent);
         }
     }
 }

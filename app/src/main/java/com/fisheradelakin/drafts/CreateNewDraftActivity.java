@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +21,12 @@ import butterknife.ButterKnife;
 
 public class CreateNewDraftActivity extends AppCompatActivity {
 
+    // TODO: implement onbackpressed and check for input :/
+
     @Bind(R.id.draft_et) EditText draft;
 
     private ThoughtsDataSource mDataSource;
+    private Thought mIntentThought;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,17 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         });
 
         mDataSource = new ThoughtsDataSource(this);
+
+        mIntentThought = (Thought) getIntent().getSerializableExtra("thought");
+        if(mIntentThought != null) {
+            draft.setText(mIntentThought.getDrafts());
+        }
+    }
+
+    public void updateThought() {
+        /*Thought thought = mThoughts.get(getLayoutPosition());
+        ThoughtsDataSource dataSource = new ThoughtsDataSource(mContext);
+        dataSource.updateThought(thought);*/
     }
 
     @Override
@@ -114,17 +129,31 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                         .neutralText("Cancel")
                         .build().show();
             } else {
-                Thought thought = new Thought();
-                thought.setDrafts(thoughtString);
 
-                mDataSource.createThought(thought);
+                if(mIntentThought != null) {
+                    ThoughtsDataSource dataSource = new ThoughtsDataSource(this);
+                    mIntentThought.setDrafts(thoughtString);
+                    dataSource.updateThought(mIntentThought);
 
-                Toast.makeText(this, "Draft saved.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Draft updated.", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } else {
+                    Thought thought = new Thought();
+                    thought.setDrafts(thoughtString);
+
+                    mDataSource.createThought(thought);
+
+                    Toast.makeText(this, "Draft saved.", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
             }
         }
 
