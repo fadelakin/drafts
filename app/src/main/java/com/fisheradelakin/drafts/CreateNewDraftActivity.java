@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 
 public class CreateNewDraftActivity extends AppCompatActivity {
 
-    // TODO: implement onbackpressed and check for input :/
-
     @Bind(R.id.draft_et) EditText draft;
 
     private ThoughtsDataSource mDataSource;
@@ -51,35 +49,39 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String thoughtString = draft.getText().toString();
-                if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
-                    finish();
-                } else {
-                    new MaterialDialog.Builder(CreateNewDraftActivity.this)
-                            .content("Save draft?")
-                            .contentColor(getResources().getColor(R.color.colorAccent))
-                            .positiveText("Save")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    updateOrCreateThought(thoughtString);
-                                }
-                            })
-                            .negativeText("Delete")
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    if(mIntentThought != null) {
-                                        mDataSource.deleteThought(mIntentThought);
-                                        Toast.makeText(CreateNewDraftActivity.this, "Draft deleted.", Toast.LENGTH_SHORT).show();
-                                        goHome();
-                                    }
-                                }
-                            })
-                            .build().show();
-                }
+                wasted();
             }
         });
+    }
+
+    private void wasted() {
+        final String thoughtString = draft.getText().toString();
+        if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
+            finish();
+        } else {
+            new MaterialDialog.Builder(CreateNewDraftActivity.this)
+                    .content("Save draft?")
+                    .contentColor(getResources().getColor(R.color.colorAccent))
+                    .positiveText("Save")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            updateOrCreateThought(thoughtString);
+                        }
+                    })
+                    .negativeText("Delete")
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            if(mIntentThought != null) {
+                                mDataSource.deleteThought(mIntentThought);
+                                Toast.makeText(CreateNewDraftActivity.this, "Draft deleted.", Toast.LENGTH_SHORT).show();
+                                goHome();
+                            }
+                        }
+                    })
+                    .build().show();
+        }
     }
 
     @Override
@@ -98,27 +100,31 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
-            String thoughtString = draft.getText().toString();
-
-            if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
-                new MaterialDialog.Builder(this)
-                        .content("Save draft?")
-                        .contentColor(getResources().getColor(R.color.colorAccent))
-                        .positiveText("Delete")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(MaterialDialog dialog, DialogAction which) {
-                                goHome();
-                            }
-                        })
-                        .neutralText("Cancel")
-                        .build().show();
-            } else {
-                updateOrCreateThought(thoughtString);
-            }
+            doneWriting();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void doneWriting() {
+        String thoughtString = draft.getText().toString();
+
+        if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
+            new MaterialDialog.Builder(this)
+                    .content("Save draft?")
+                    .contentColor(getResources().getColor(R.color.colorAccent))
+                    .positiveText("Delete")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            goHome();
+                        }
+                    })
+                    .neutralText("Cancel")
+                    .build().show();
+        } else {
+            updateOrCreateThought(thoughtString);
+        }
     }
 
     private void goHome() {
@@ -149,4 +155,8 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        wasted();
+    }
 }
