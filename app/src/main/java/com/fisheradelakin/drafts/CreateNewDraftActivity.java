@@ -41,6 +41,13 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mDataSource = new ThoughtsDataSource(this);
+
+        mIntentThought = (Thought) getIntent().getSerializableExtra("thought");
+        if(mIntentThought != null) {
+            draft.setText(mIntentThought.getDrafts());
+        }
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,26 +69,17 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                             .onNegative(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    finish();
+                                    if(mIntentThought != null) {
+                                        mDataSource.deleteThought(mIntentThought);
+                                        Toast.makeText(CreateNewDraftActivity.this, "Draft deleted.", Toast.LENGTH_SHORT).show();
+                                        goHome();
+                                    }
                                 }
                             })
                             .build().show();
                 }
             }
         });
-
-        mDataSource = new ThoughtsDataSource(this);
-
-        mIntentThought = (Thought) getIntent().getSerializableExtra("thought");
-        if(mIntentThought != null) {
-            draft.setText(mIntentThought.getDrafts());
-        }
-    }
-
-    public void updateThought() {
-        /*Thought thought = mThoughts.get(getLayoutPosition());
-        ThoughtsDataSource dataSource = new ThoughtsDataSource(mContext);
-        dataSource.updateThought(thought);*/
     }
 
     @Override
@@ -110,10 +108,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(MaterialDialog dialog, DialogAction which) {
-                                Intent intent = new Intent(CreateNewDraftActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
+                                goHome();
                             }
                         })
                         .neutralText("Cancel")
@@ -126,6 +121,13 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void goHome() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     private void updateOrCreateThought(String thoughtString) {
         if(mIntentThought != null) {
             ThoughtsDataSource dataSource = new ThoughtsDataSource(this);
@@ -134,10 +136,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Draft updated.", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            goHome();
         } else {
             Thought thought = new Thought();
             thought.setDrafts(thoughtString);
@@ -146,10 +145,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Draft saved.", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            goHome();
         }
     }
 
