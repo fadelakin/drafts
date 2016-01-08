@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         draftsRV.setLayoutManager(layoutManager);
+        draftsRV.addItemDecoration(new DividerItemDecoration(this));
     }
 
     @Override
