@@ -56,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getLoaderManager().initLoader(0, null, this);
 
         draftsRV.setHasFixedSize(true);
-        draftsRV.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        draftsRV.setLayoutManager(layoutManager);
     }
 
     @Override
