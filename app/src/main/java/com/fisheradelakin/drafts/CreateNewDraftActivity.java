@@ -55,17 +55,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(MaterialDialog dialog, DialogAction which) {
-                                    Thought thought = new Thought();
-                                    thought.setDrafts(thoughtString);
-
-                                    mDataSource.createThought(thought);
-
-                                    Toast.makeText(CreateNewDraftActivity.this, "Draft saved.", Toast.LENGTH_SHORT).show();
-
-                                    Intent intent = new Intent(CreateNewDraftActivity.this, MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                    updateOrCreateThought(thoughtString);
                                 }
                             })
                             .negativeText("Delete")
@@ -129,35 +119,38 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                         .neutralText("Cancel")
                         .build().show();
             } else {
-
-                if(mIntentThought != null) {
-                    ThoughtsDataSource dataSource = new ThoughtsDataSource(this);
-                    mIntentThought.setDrafts(thoughtString);
-                    dataSource.updateThought(mIntentThought);
-
-                    Toast.makeText(this, "Draft updated.", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                } else {
-                    Thought thought = new Thought();
-                    thought.setDrafts(thoughtString);
-
-                    mDataSource.createThought(thought);
-
-                    Toast.makeText(this, "Draft saved.", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
+                updateOrCreateThought(thoughtString);
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateOrCreateThought(String thoughtString) {
+        if(mIntentThought != null) {
+            ThoughtsDataSource dataSource = new ThoughtsDataSource(this);
+            mIntentThought.setDrafts(thoughtString);
+            dataSource.updateThought(mIntentThought);
+
+            Toast.makeText(this, "Draft updated.", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            Thought thought = new Thought();
+            thought.setDrafts(thoughtString);
+
+            mDataSource.createThought(thought);
+
+            Toast.makeText(this, "Draft saved.", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
     }
 
 }
