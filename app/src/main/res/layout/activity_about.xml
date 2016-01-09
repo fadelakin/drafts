@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.fisheradelakin.drafts.CreateNewDraftActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/app_name"
+                  android:textSize="48sp"
+                  android:textColor="@color/colorAccent"
+                  android:fontFamily="sans-serif-thin"
+                  android:layout_centerInParent="true"
+            android:id="@+id/app_name_tv"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Developed by Fisher Adelakin"
+                  android:textSize="24sp"
+                  android:textColor="@color/colorAccent"
+                  android:fontFamily="sans-serif-thin"
+                  android:layout_centerInParent="true"
+            android:layout_below="@id/app_name_tv"
+            android:id="@+id/developed_by_tv"
+            android:layout_marginTop="10dp"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="\@tmidao"
+                  android:textSize="24sp"
+                  android:textColor="@color/colorAccent"
+                  android:fontFamily="sans-serif-thin"
+                  android:layout_centerInParent="true"
+            android:layout_below="@id/developed_by_tv"
+                  android:layout_marginTop="10dp"
+            android:id="@+id/twitter_name"/>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

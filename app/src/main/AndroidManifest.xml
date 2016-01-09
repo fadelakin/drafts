@@ -28,6 +28,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fisheradelakin.drafts.MainActivity"/>
         </activity>
+        <activity android:name=".AboutActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fisheradelakin.drafts.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>
