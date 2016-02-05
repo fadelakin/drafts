@@ -1,5 +1,7 @@
 package com.fisheradelakin.drafts;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fisheradelakin.drafts.db.ThoughtsDataSource;
 import com.fisheradelakin.drafts.model.Thought;
@@ -43,7 +46,7 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
         return mThoughts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView thought;
 
@@ -53,6 +56,7 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
             thought = (TextView) itemView.findViewById(R.id.thought);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -60,6 +64,17 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
             Intent intent = new Intent(mContext, CreateNewDraftActivity.class);
             intent.putExtra("thought", mThoughts.get(getLayoutPosition()));
             mContext.startActivity(intent);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            ClipboardManager clipboardManager = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("Thought", mThoughts.get(getLayoutPosition()).getDrafts());
+            clipboardManager.setPrimaryClip(clipData);
+
+            Toast.makeText(mContext, "Draft copied to clipboard.", Toast.LENGTH_SHORT).show();
+
+            return true;
         }
     }
 }
