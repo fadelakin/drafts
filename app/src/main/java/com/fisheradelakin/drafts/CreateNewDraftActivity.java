@@ -37,7 +37,9 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         toolbar.setTitle("Create New Draft");
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mDataSource = new ThoughtsDataSource(this);
 
