@@ -31,30 +31,42 @@
                   android:textSize="48sp"
                   android:textColor="@color/colorAccent"
                   android:fontFamily="sans-serif-thin"
-                  android:layout_centerInParent="true"
-            android:id="@+id/app_name_tv"/>
+                  android:layout_centerHorizontal="true"
+                  android:layout_marginTop="?attr/actionBarSize"
+                  android:id="@+id/app_name_tv"/>
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="Developed by Fisher Adelakin"
+                  android:text="@string/developed_by"
                   android:textSize="24sp"
                   android:textColor="@color/colorAccent"
                   android:fontFamily="sans-serif-thin"
                   android:layout_centerInParent="true"
-            android:layout_below="@id/app_name_tv"
-            android:id="@+id/developed_by_tv"
-            android:layout_marginTop="10dp"/>
+                  android:layout_below="@id/app_name_tv"
+                  android:id="@+id/developed_by_tv"
+                  android:layout_marginTop="10dp"/>
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="\@tmidao"
+                  android:text="@string/twitter_handle"
                   android:textSize="24sp"
                   android:textColor="@color/colorAccent"
                   android:fontFamily="sans-serif-thin"
                   android:layout_centerInParent="true"
-            android:layout_below="@id/developed_by_tv"
+                  android:layout_below="@id/developed_by_tv"
                   android:layout_marginTop="10dp"
-            android:id="@+id/twitter_name"/>
+                  android:id="@+id/twitter_name"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/desc"
+                  android:textSize="24sp"
+                  android:textColor="@color/colorAccent"
+                  android:fontFamily="sans-serif-thin"
+                  android:layout_centerInParent="true"
+                  android:layout_below="@id/twitter_name"
+                  android:layout_marginTop="10dp"
+                  android:padding="16dp"/>
 
     </RelativeLayout>
 

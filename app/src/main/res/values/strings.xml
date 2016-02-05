@@ -4,4 +4,9 @@
     <string name="title_activity_create_new_draft">CreateNewDraftActivity</string>
     <string name="action_save">Save</string>
     <string name="draft_hint">What\'s on your mind?</string>
+    <string name="developed_by">Developed by Fisher Adelakin</string>
+    <string name="twitter_handle">\@tmidao</string>
+    <string name="desc">Record your thoughts in a quick and simple manner.\n\n Press and hold on a
+        draft to copy it to the clipboard.
+    </string>
 </resources>
