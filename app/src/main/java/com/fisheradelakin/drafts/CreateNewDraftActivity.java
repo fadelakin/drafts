@@ -51,7 +51,11 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wasted();
+                if (mIntentThought != null) {
+                    wasted();
+                } else {
+                    doneWriting();
+                }
             }
         });
     }
@@ -102,30 +106,40 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
-            doneWriting();
+            if (mIntentThought != null) {
+                wasted();
+            } else {
+                doneWriting();
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void doneWriting() {
-        String thoughtString = draft.getText().toString();
+        final String thoughtString = draft.getText().toString();
 
         if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
+            goHome();
+        } else {
             new MaterialDialog.Builder(this)
                     .content("Save draft?")
                     .contentColor(getResources().getColor(R.color.colorAccent))
-                    .positiveText("Delete")
+                    .positiveText("Save")
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            updateOrCreateThought(thoughtString);
+                        }
+                    })
+                    .neutralText("Discard")
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(MaterialDialog dialog, DialogAction which) {
                             goHome();
                         }
                     })
-                    .neutralText("Cancel")
                     .build().show();
-        } else {
-            updateOrCreateThought(thoughtString);
         }
     }
 
@@ -159,6 +173,10 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        wasted();
+        if (mIntentThought != null) {
+            wasted();
+        } else {
+            doneWriting();
+        }
     }
 }
