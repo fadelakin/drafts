@@ -86,6 +86,13 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                             }
                         }
                     })
+                    .neutralText("Discard")
+                    .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                            goHome();
+                        }
+                    })
                     .build().show();
         }
     }
