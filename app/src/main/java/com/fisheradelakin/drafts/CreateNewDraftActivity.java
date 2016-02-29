@@ -109,7 +109,12 @@ public class CreateNewDraftActivity extends AppCompatActivity {
             if (mIntentThought != null) {
                 wasted();
             } else {
-                doneWriting();
+                String thoughtString = draft.getText().toString();
+                if (thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
+                    goHome();
+                } else {
+                    updateOrCreateThought(thoughtString);
+                }
             }
         }
 
