@@ -1,7 +1,6 @@
 package com.fisheradelakin.drafts;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -74,7 +73,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                         public void onClick(MaterialDialog dialog, DialogAction which) {
                             updateOrCreateThought(thoughtString);
                         }
-                    })
+                    })/*
                     .negativeText("Delete")
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
@@ -85,7 +84,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                                 goHome();
                             }
                         }
-                    })
+                    })*/
                     .neutralText("Discard")
                     .onNeutral(new MaterialDialog.SingleButtonCallback() {
                         @Override
@@ -112,18 +111,31 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_save) {
-            if (mIntentThought != null) {
-                saveFunction();
-            } else {
-                saveFunction();
-            }
+        switch(id) {
+            case R.id.action_save:
+                if (mIntentThought != null) {
+                    saveDraft();
+                } else {
+                    saveDraft();
+                }
+                break;
+            case R.id.action_delete:
+                deleteDraft();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveFunction() {
+    private void deleteDraft() {
+        if (mIntentThought != null) {
+            mDataSource.deleteThought(mIntentThought);
+            Toast.makeText(CreateNewDraftActivity.this, "Draft deleted.", Toast.LENGTH_SHORT).show();
+            goHome();
+        }
+    }
+
+    private void saveDraft() {
         String thoughtString = draft.getText().toString();
         if (thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
             goHome();

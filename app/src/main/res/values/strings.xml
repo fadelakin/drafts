@@ -9,4 +9,5 @@
     <string name="desc">Record your thoughts in a quick and simple manner.\n\n Press and hold on a
         draft to copy it to the clipboard.
     </string>
+    <string name="action_delete">Delete</string>
 </resources>
