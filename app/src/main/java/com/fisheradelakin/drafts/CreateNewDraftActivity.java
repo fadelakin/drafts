@@ -1,10 +1,10 @@
 package com.fisheradelakin.drafts;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -114,18 +114,22 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
             if (mIntentThought != null) {
-                wasted();
+                saveFunction();
             } else {
-                String thoughtString = draft.getText().toString();
-                if (thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
-                    goHome();
-                } else {
-                    updateOrCreateThought(thoughtString);
-                }
+                saveFunction();
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveFunction() {
+        String thoughtString = draft.getText().toString();
+        if (thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
+            goHome();
+        } else {
+            updateOrCreateThought(thoughtString);
+        }
     }
 
     private void doneWriting() {
