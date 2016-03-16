@@ -6,8 +6,10 @@
     <string name="draft_hint">What\'s on your mind?</string>
     <string name="developed_by">Developed by Fisher Adelakin</string>
     <string name="twitter_handle">\@tmidao</string>
-    <string name="desc">Record your thoughts in a quick and simple manner.\n\n Press and hold on a
-        draft to copy it to the clipboard.
+    <string name="desc">Record your thoughts in a quick and simple manner.
+        \n\nPress and hold on a draft to copy it to the clipboard.
+        \n\nTo delete a draft, tap the overflow icon in the create a new draft screen, and hit delete.
+        \n\nThanks for using my app! \ud83d\ude03\ud83d\ude03
     </string>
     <string name="action_delete">Delete</string>
 </resources>
