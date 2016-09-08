@@ -16,4 +16,14 @@
         android:background="@color/colorPrimary"
         android:scrollbars="vertical"
         android:fadeScrollbars="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_drafts"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:id="@+id/empty_tv"/>
+
 </RelativeLayout>

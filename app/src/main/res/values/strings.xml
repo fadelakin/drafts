@@ -12,4 +12,5 @@
         \n\nThanks for using my app! \ud83d\ude03\ud83d\ude03
     </string>
     <string name="action_delete">Delete</string>
+    <string name="no_drafts">You have no drafts. Tap \'+\' to add a new draft</string>
 </resources>
