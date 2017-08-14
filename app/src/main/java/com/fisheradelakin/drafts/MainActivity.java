@@ -18,15 +18,19 @@ import android.widget.TextView;
 import com.fisheradelakin.drafts.db.ThoughtsDataSource;
 import com.fisheradelakin.drafts.db.ThoughtsLoader;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    @Bind(R.id.drafts_rv) RecyclerView draftsRV;
-    @Bind(R.id.empty_tv) TextView emptyTV;
+    @BindView(R.id.drafts_rv) RecyclerView draftsRV;
+    @BindView(R.id.empty_tv) TextView emptyTV;
 
     private ThoughtsDataSource mDataSource;
+
+    // TODO: Migrate to a Realm database.
+    // TODO: > see if db exists, if it does, move everything over to Realm.
+    // TODO: > if db doesn't exist, use realm.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

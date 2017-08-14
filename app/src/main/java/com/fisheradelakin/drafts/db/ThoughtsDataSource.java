@@ -9,9 +9,7 @@ import com.fisheradelakin.drafts.model.Thought;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by temidayo on 1/7/16.
- */
+
 public class ThoughtsDataSource {
 
     private DbHelper mDbHelper;
@@ -36,7 +34,7 @@ public class ThoughtsDataSource {
         return cursorToThoughts(cursor);
     }
 
-    public Cursor allThoughtsCursor() {
+    Cursor allThoughtsCursor() {
         return mDbHelper.getReadableDatabase().query(DbHelper.THOUGHTS_TABLE, allColumns, null, null, null, null, null);
     }
 

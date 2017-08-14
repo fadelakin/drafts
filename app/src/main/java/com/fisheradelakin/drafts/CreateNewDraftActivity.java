@@ -15,12 +15,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.fisheradelakin.drafts.db.ThoughtsDataSource;
 import com.fisheradelakin.drafts.model.Thought;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CreateNewDraftActivity extends AppCompatActivity {
 
-    @Bind(R.id.draft_et) EditText draft;
+    @BindView(R.id.draft_et) EditText draft;
 
     private ThoughtsDataSource mDataSource;
     private Thought mIntentThought;
