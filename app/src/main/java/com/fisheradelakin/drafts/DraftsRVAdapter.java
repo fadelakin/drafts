@@ -16,6 +16,9 @@ import com.fisheradelakin.drafts.model.Thought;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by temidayo on 1/7/16.
  */
@@ -39,6 +42,15 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Thought thought = mThoughts.get(position);
         holder.thought.setText(thought.getDrafts());
+
+        if (thought.getTitle() != null) {
+            holder.thoughtTitle.setText(thought.getTitle());
+        }
+
+        long timeAgo = thought.getUpdatedAt();
+        if (timeAgo != 0) {
+
+        }
     }
 
     @Override
@@ -48,12 +60,13 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        TextView thought;
+        @BindView(R.id.thought) TextView thought;
+        @BindView(R.id.thought_title) TextView thoughtTitle;
+        @BindView(R.id.time_ago) TextView timeAgo;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            thought = (TextView) itemView.findViewById(R.id.thought);
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -68,6 +81,7 @@ public class DraftsRVAdapter extends RecyclerView.Adapter<DraftsRVAdapter.ViewHo
 
         @Override
         public boolean onLongClick(View v) {
+            //TODO: Switch to share and copy
             ClipboardManager clipboardManager = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clipData = ClipData.newPlainText("Thought", mThoughts.get(getLayoutPosition()).getDrafts());
             clipboardManager.setPrimaryClip(clipData);

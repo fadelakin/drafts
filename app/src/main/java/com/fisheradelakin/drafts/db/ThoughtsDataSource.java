@@ -16,6 +16,9 @@ public class ThoughtsDataSource {
 
     private String[] allColumns = {
             DbHelper.COLUMN_ID,
+            DbHelper.COLUMN_CREATED_AT,
+            DbHelper.COLUMN_UPDATED_AT,
+            DbHelper.COLUMN_TITLE,
             DbHelper.COLUMN_DRAFTS
     };
 
@@ -25,13 +28,11 @@ public class ThoughtsDataSource {
 
     public void createThought(Thought thought) {
         ContentValues contentValues = new ContentValues();
+        contentValues.put(DbHelper.COLUMN_CREATED_AT, System.currentTimeMillis());
+        contentValues.put(DbHelper.COLUMN_UPDATED_AT, System.currentTimeMillis());
+        contentValues.put(DbHelper.COLUMN_TITLE, thought.getTitle());
         contentValues.put(DbHelper.COLUMN_DRAFTS, thought.getDrafts());
         thought.setId(mDbHelper.getWritableDatabase().insert(DbHelper.THOUGHTS_TABLE, null, contentValues));
-    }
-
-    public List<Thought> getAllThoughts() {
-        Cursor cursor = allThoughtsCursor();
-        return cursorToThoughts(cursor);
     }
 
     Cursor allThoughtsCursor() {
@@ -52,13 +53,18 @@ public class ThoughtsDataSource {
     private Thought cursorToThought(Cursor cursor) {
         Thought thought = new Thought();
         thought.setId(cursor.getLong(0));
-        thought.setDrafts(cursor.getString(1));
+        thought.setCreatedAt(cursor.getLong(1));
+        thought.setUpdatedAt(cursor.getLong(2));
+        thought.setTitle(cursor.getString(3));
+        thought.setDrafts(cursor.getString(4));
         return thought;
     }
 
     public void updateThought(Thought thought) {
         ContentValues values = new ContentValues();
         values.put(DbHelper.COLUMN_DRAFTS, thought.getDrafts());
+        values.put(DbHelper.COLUMN_TITLE, thought.getTitle());
+        values.put(DbHelper.COLUMN_UPDATED_AT, System.currentTimeMillis());
 
         String[] whereArgs = {String.valueOf(thought.getId())};
 

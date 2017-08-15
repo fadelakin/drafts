@@ -3,7 +3,8 @@
     <string name="action_settings">About</string>
     <string name="title_activity_create_new_draft">CreateNewDraftActivity</string>
     <string name="action_save">Save</string>
-    <string name="draft_hint">What\'s on your mind?</string>
+    <string name="draft_title_hint">New note</string>
+    <string name="draft_hint">Write something…</string>
     <string name="developed_by">Developed by Fisher Adelakin</string>
     <string name="twitter_handle">\@tmidao</string>
     <string name="desc">Record your thoughts in a quick and simple manner.
@@ -12,5 +13,5 @@
         \n\nThanks for using my app! \ud83d\ude03\ud83d\ude03
     </string>
     <string name="action_delete">Delete</string>
-    <string name="no_drafts">You have no drafts. Tap \'+\' to add a new draft</string>
+    <string name="no_drafts">Tap \'+\' to add a new draft</string>
 </resources>

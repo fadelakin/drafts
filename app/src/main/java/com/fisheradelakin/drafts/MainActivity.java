@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private ThoughtsDataSource mDataSource;
 
-    // TODO: Migrate to a Realm database.
-    // TODO: > see if db exists, if it does, move everything over to Realm.
-    // TODO: > if db doesn't exist, use realm.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

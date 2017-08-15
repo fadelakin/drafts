@@ -7,11 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 class DbHelper extends SQLiteOpenHelper {
 
-    // TODO: add date fields for the created at and updated at columns
-    // TODO: increment db version but move over all info to new db
-
     private static final String DATABASE_NAME = "drafts.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     static final String THOUGHTS_TABLE = "thoughts";
 
@@ -36,17 +33,21 @@ class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + THOUGHTS_TABLE + " ("
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + THOUGHTS_TABLE + " ("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_CREATED_AT + " INTEGER, "
-                + COLUMN_UPDATED_AT + "INTEGER, "
+                + COLUMN_UPDATED_AT + " INTEGER, "
                 + COLUMN_TITLE + " TEXT, "
-                + COLUMN_DRAFTS + " TEXT)");
+                + COLUMN_DRAFTS + " TEXT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + THOUGHTS_TABLE);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + THOUGHTS_TABLE +
+                    COLUMN_CREATED_AT + " INTEGER, " +
+                    COLUMN_UPDATED_AT + " INTEGER, " +
+                    COLUMN_TITLE + " TEXT;");
+        }
     }
 }

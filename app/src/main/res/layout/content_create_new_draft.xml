@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.fisheradelakin.drafts.CreateNewDraftActivity"
-    tools:showIn="@layout/activity_create_new_draft">
+    tools:showIn="@layout/activity_create_new_draft"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/draft_title_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/draft_title_hint"
+        android:background="@android:color/transparent"
+        android:scrollbars="vertical"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/title_color"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/draft_et"
@@ -20,6 +30,8 @@
         android:hint="@string/draft_hint"
         android:inputType="textMultiLine"
         android:background="@android:color/transparent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical"
+        android:textColor="@color/desc_color"
+        android:textSize="16sp"/>
 
-</RelativeLayout>
+</LinearLayout>

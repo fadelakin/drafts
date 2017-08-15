@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="?android:attr/selectableItemBackground"
               android:clickable="true"
               android:focusable="true"
-              android:padding="14dp">
+              android:orientation="horizontal"
+              android:padding="16dp">
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/thought"
-              tools:text="oatmeal doesn’t live by your time constraints."
-              android:textSize="14sp"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="9"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/thought_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/title_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="oatmeal sessions"/>
+
+        <TextView android:id="@+id/thought"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/desc_color"
+                  android:textSize="16sp"
+                  tools:text="oatmeal does not live by your time constraints."/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time_ago"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        tools:text="15h"
+        android:layout_gravity="center"
+        android:gravity="center"/>
 
 </LinearLayout>

@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 public class CreateNewDraftActivity extends AppCompatActivity {
 
     @BindView(R.id.draft_et) EditText draft;
+    @BindView(R.id.draft_title_et) EditText draftTitle;
 
     private ThoughtsDataSource mDataSource;
     private Thought mIntentThought;
@@ -61,6 +62,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
     private void wasted() {
         final String thoughtString = draft.getText().toString();
+        final String thoughtTitle = draftTitle.getText().toString();
         if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
             finish();
         } else {
@@ -71,20 +73,9 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(MaterialDialog dialog, DialogAction which) {
-                            updateOrCreateThought(thoughtString);
+                            updateOrCreateThought(thoughtString, thoughtTitle);
                         }
-                    })/*
-                    .negativeText("Delete")
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
-                            if(mIntentThought != null) {
-                                mDataSource.deleteThought(mIntentThought);
-                                Toast.makeText(CreateNewDraftActivity.this, "Draft deleted.", Toast.LENGTH_SHORT).show();
-                                goHome();
-                            }
-                        }
-                    })*/
+                    })
                     .neutralText("Discard")
                     .onNeutral(new MaterialDialog.SingleButtonCallback() {
                         @Override
@@ -137,15 +128,17 @@ public class CreateNewDraftActivity extends AppCompatActivity {
 
     private void saveDraft() {
         String thoughtString = draft.getText().toString();
+        String thoughtTitle = draftTitle.getText().toString();
         if (thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
             goHome();
         } else {
-            updateOrCreateThought(thoughtString);
+            updateOrCreateThought(thoughtString, thoughtTitle);
         }
     }
 
     private void doneWriting() {
         final String thoughtString = draft.getText().toString();
+        final String thoughtTitle = draftTitle.getText().toString();
 
         if(thoughtString.isEmpty() || thoughtString.trim().length() == 0) {
             goHome();
@@ -157,7 +150,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(MaterialDialog dialog, DialogAction which) {
-                            updateOrCreateThought(thoughtString);
+                            updateOrCreateThought(thoughtString, thoughtTitle);
                         }
                     })
                     .neutralText("Discard")
@@ -178,10 +171,11 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void updateOrCreateThought(String thoughtString) {
+    private void updateOrCreateThought(String thoughtString, String thoughtTitle) {
         if(mIntentThought != null) {
             ThoughtsDataSource dataSource = new ThoughtsDataSource(this);
             mIntentThought.setDrafts(thoughtString);
+            mIntentThought.setTitle(thoughtTitle);
             dataSource.updateThought(mIntentThought);
 
             Toast.makeText(this, "Draft updated.", Toast.LENGTH_SHORT).show();
@@ -190,6 +184,7 @@ public class CreateNewDraftActivity extends AppCompatActivity {
         } else {
             Thought thought = new Thought();
             thought.setDrafts(thoughtString);
+            thought.setTitle(thoughtTitle);
 
             mDataSource.createThought(thought);
 
